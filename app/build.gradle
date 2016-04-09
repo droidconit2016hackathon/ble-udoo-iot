@@ -34,4 +34,6 @@ dependencies {
 
     apt "org.androidannotations:androidannotations:4.0.0"
     compile "org.androidannotations:androidannotations-api:4.0.0"
+
+    compile "org.altbeacon:android-beacon-library:2.8"
 }

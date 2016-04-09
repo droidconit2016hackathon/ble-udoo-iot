@@ -67,9 +67,11 @@ public class IblioService {
                     BluetoothGattService iBlioService = gatt.getService(UUID.fromString("ee0c1000-8786-40ba-ab96-99b91ac981d8"));
                     led1Characteristic = iBlioService.getCharacteristic(UUID.fromString("ee0c1012-8786-40ba-ab96-99b91ac981d8"));
 
+
                     IblioService.this.gatt = gatt;
 
                     if (led1Characteristic != null) {
+                        ((MainActivity) context).setTextIblioServiceInfo("Characteristic found on iBlio!");
                         connected = true;
                     }
                 }
@@ -93,8 +95,8 @@ public class IblioService {
 
     }
 
-    private int getValue(byte[] measureValue) {
-        return wrap(measureValue).order(ByteOrder.BIG_ENDIAN).getInt();
-    }
+//    private int getValue(byte[] measureValue) {
+//        return wrap(measureValue).order(ByteOrder.BIG_ENDIAN).getInt();
+//    }
 
 }

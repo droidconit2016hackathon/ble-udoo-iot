@@ -32,6 +32,7 @@ import org.androidannotations.annotations.ViewById;
 import java.util.Collection;
 
 import it.droidcon.hackathon.iotsemplice.IblioService;
+import it.droidcon.hackathon.iotsemplice.NeoBLEmoduleService;
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity implements BeaconConsumer {
@@ -62,8 +63,10 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer {
     @Bean
     IblioService iblioService;
 
-    // Stops scanning after 10 seconds.
-    private static final long SCAN_PERIOD = 15000;
+    @Bean
+    NeoBLEmoduleService neoBLEmoduleService;
+
+    private static final long SCAN_PERIOD = 25000;
 
     private BluetoothDevice iBlioBluetoothDevice;
 
@@ -105,6 +108,7 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer {
                     iblioService.connectGatt(iBlioBluetoothDevice);
                 } else if (udooBluetoothDevice == null && scanRecord != null && scanRecord.getDeviceName() != null && scanRecord.getDeviceName().contains("CC2650")) {
                     udooBluetoothDevice = result.getDevice();
+                    neoBLEmoduleService.connectGatt(udooBluetoothDevice);
                 }
             }
         };
@@ -134,9 +138,20 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer {
         beaconManager.bind(this);
     }
 
+
+    @UiThread
+    public void setTextIblioServiceInfo(String text) {
+        iblioservice_info.setText(text);
+    }
+
+
     @UiThread
     public void setTextOnConnectionInfo(String text) {
         connection_info_text.setText(text);
+    }
+    @UiThread
+    public void setTextOnNeoBleConnectionInfo(String text) {
+        neo_bluetooth_info.setText(text);
     }
 
     @Override

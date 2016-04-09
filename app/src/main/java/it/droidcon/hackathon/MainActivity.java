@@ -29,13 +29,29 @@ public class MainActivity extends AppCompatActivity {
     @ViewById
     TextView connection_info_text;
 
+    @ViewById
+    Button light_on;
+
+    @ViewById
+    TextView iblioservice_info;
+
+    @ViewById
+    TextView neo_bluetooth_info;
+
+    @ViewById
+    TextView accelerometer_info;
+
+    @ViewById
+    TextView beacon_distance_info;
+
     private BluetoothAdapter mBluetoothAdapter;
     private boolean mScanning;
     private Handler mHandler;
     BluetoothGatt gatt;
 
-    @ViewById
-    Button light_on;
+
+
+
 
     @Bean
     IblioService iblioService;

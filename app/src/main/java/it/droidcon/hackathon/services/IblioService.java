@@ -1,4 +1,4 @@
-package it.droidcon.hackathon.iotsemplice;
+package it.droidcon.hackathon.services;
 
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
@@ -11,13 +11,9 @@ import android.util.Log;
 
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
-
-import java.nio.ByteOrder;
 import java.util.UUID;
 
 import it.droidcon.hackathon.MainActivity;
-
-import static java.nio.ByteBuffer.wrap;
 
 /**
  * Created by fditrani on 09/04/16.
@@ -78,17 +74,17 @@ public class IblioService {
 
             }
 
-            @Override
-            public void onCharacteristicChanged(BluetoothGatt gatt,
-                                                BluetoothGattCharacteristic characteristic) {
-
-//                byte[] measureValue = characteristic.getValue();
+//            @Override
+//            public void onCharacteristicChanged(BluetoothGatt gatt,
+//                                                BluetoothGattCharacteristic characteristic) {
 //
-//                int intValue = getValue(measureValue);
-//                Log.i("VAL", String.valueOf(intValue));
-//
-//                //TODO do something
-            }
+////                byte[] measureValue = characteristic.getValue();
+////
+////                int intValue = getValue(measureValue);
+////                Log.i("VAL", String.valueOf(intValue));
+////
+////                //TODO do something
+//            }
 
 
         });

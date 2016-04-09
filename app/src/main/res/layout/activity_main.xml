@@ -20,7 +20,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
+        android:text="Light on led"
         android:id="@+id/light_on"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
@@ -60,5 +60,23 @@
         android:id="@+id/beacon_distance_info"
         android:layout_below="@+id/accelerometer_info"
         android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/fall_info"
+        android:layout_above="@+id/light_on"
+        android:layout_centerHorizontal="true"
+        android:text="Listening..." />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reset"
+        android:id="@+id/reset_button"
+        android:layout_alignTop="@+id/fall_info"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

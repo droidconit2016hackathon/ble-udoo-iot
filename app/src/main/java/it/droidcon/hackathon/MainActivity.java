@@ -2,7 +2,6 @@ package it.droidcon.hackathon;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothManager;
 import android.bluetooth.le.BluetoothLeScanner;
 import android.bluetooth.le.ScanCallback;
@@ -28,11 +27,13 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
+import org.udoo.udooblulib.manager.UdooBluManager;
 
+import it.droidcon.hackathon.services.IblioService;
+import it.droidcon.hackathon.services.NeoBLEmoduleService;
 import java.util.Collection;
 
-import it.droidcon.hackathon.iotsemplice.IblioService;
-import it.droidcon.hackathon.iotsemplice.NeoBLEmoduleService;
+
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity implements BeaconConsumer {
@@ -42,6 +43,9 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer {
 
     @ViewById
     Button light_on;
+
+    @ViewById
+    Button reset_button;
 
     @ViewById
     TextView iblioservice_info;
@@ -55,10 +59,15 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer {
     @ViewById
     TextView beacon_distance_info;
 
+    @ViewById
+    TextView fall_info;
+
     private BluetoothAdapter mBluetoothAdapter;
-    private boolean mScanning;
     private Handler mHandler;
-    BluetoothGatt gatt;
+
+
+
+
 
     @Bean
     IblioService iblioService;
@@ -72,13 +81,15 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer {
 
     private BluetoothDevice udooBluetoothDevice;
 
+    private UdooBluManager mUdooBluManager;
+
     private BeaconManager beaconManager;
 
     @AfterViews
     public void init() {
-        //initBluetooth();
-        //scanLeDevice();
-        initBeacons();
+        mUdooBluManager = new UdooBluManager(this);
+        initBluetooth();
+        scanLeDevice();
     }
 
 
@@ -87,9 +98,13 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer {
         iblioService.lightOnLed(5);
     }
 
+    @Click(R.id.reset_button)
+    void resetFallenInfo() {
+        setFallenInfo("Listening...");
+    }
+
 
     private void initBluetooth() {
-        // Initializes Bluetooth adapter.
         final BluetoothManager bluetoothManager =
                 (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         mBluetoothAdapter = bluetoothManager.getAdapter();
@@ -107,22 +122,19 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer {
                     iBlioBluetoothDevice = result.getDevice();
                     iblioService.connectGatt(iBlioBluetoothDevice);
                 } else if (udooBluetoothDevice == null && scanRecord != null && scanRecord.getDeviceName() != null && scanRecord.getDeviceName().contains("CC2650")) {
+                    setTextOnNeoBleConnectionInfo("NEO BLE device found!");
                     udooBluetoothDevice = result.getDevice();
-                    neoBLEmoduleService.connectGatt(udooBluetoothDevice);
+                    neoBLEmoduleService.connectNeoBleDevice(mUdooBluManager, udooBluetoothDevice.getAddress());
                 }
             }
         };
 
 
         final BluetoothLeScanner bluetoothLeScanner = mBluetoothAdapter.getBluetoothLeScanner();
-        // Stops scanning after a pre-defined scan period.
         mHandler = new Handler();
         mHandler.postDelayed(() -> {
-            mScanning = false;
             bluetoothLeScanner.stopScan(callback);
         }, SCAN_PERIOD);
-
-        mScanning = true;
 
         bluetoothLeScanner.startScan(callback);
 
@@ -138,7 +150,6 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer {
         beaconManager.bind(this);
     }
 
-
     @UiThread
     public void setTextIblioServiceInfo(String text) {
         iblioservice_info.setText(text);
@@ -149,6 +160,7 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer {
     public void setTextOnConnectionInfo(String text) {
         connection_info_text.setText(text);
     }
+
     @UiThread
     public void setTextOnNeoBleConnectionInfo(String text) {
         neo_bluetooth_info.setText(text);
@@ -188,4 +200,18 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer {
     public void setTextOnBeaconDistance(String text) {
         beacon_distance_info.setText(text);
     }
+
+    @UiThread
+    public void setAccelerometerInfo(String text) {
+          accelerometer_info.setText(text);
+    }
+
+
+    @UiThread
+    public void setFallenInfo(String text) {
+        fall_info.setText(text);
+    }
+
+
+
 }

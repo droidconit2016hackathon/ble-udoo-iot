@@ -90,6 +90,6 @@ public class NeoBLEmoduleService {
     }
 
     private boolean fallenMagnitude(float magnitude) {
-        return Integer.parseInt(String.valueOf(magnitude)) == 0;
+        return (int)magnitude == 0;
     }
 }

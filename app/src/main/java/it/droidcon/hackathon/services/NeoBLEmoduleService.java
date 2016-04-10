@@ -55,7 +55,7 @@ public class NeoBLEmoduleService {
                             float[] gravity = new float[3];
 
                             //Kalman filter
-                            float kFilteringFactor=0.6f;
+                            float kFilteringFactor = 0.6f;
 
                             gravity[0] = (accelerometer_values[0] * kFilteringFactor) + (gravity[0] * (1.0f - kFilteringFactor));
                             gravity[1] = (accelerometer_values[1] * kFilteringFactor) + (gravity[1] * (1.0f - kFilteringFactor));
@@ -66,12 +66,12 @@ public class NeoBLEmoduleService {
                             linear_acceleration[2] = (accelerometer_values[2] - gravity[2]);
 
                             float magnitude;
-                            magnitude = (float)Math.sqrt(linear_acceleration[0]*linear_acceleration[0]+linear_acceleration[1]*linear_acceleration[1]+linear_acceleration[2]*linear_acceleration[2]);
+                            magnitude = (float) Math.sqrt(linear_acceleration[0] * linear_acceleration[0] + linear_acceleration[1] * linear_acceleration[1] + linear_acceleration[2] * linear_acceleration[2]);
                             magnitude = Math.abs(magnitude);
-                            if (fallenMagnitude(magnitude)){
-                                ((MainActivity)context).setFallenInfo("Caduta rilevata!!");
+                            if (fallenMagnitude(magnitude)) {
+                                ((MainActivity) context).turnLightOn();
                             }
-                            ((MainActivity)context).setAccelerometerInfo(
+                            ((MainActivity) context).setAccelerometerInfo(
                                     "x: " + xValue + "\ny: " + yValue + "\nz: " + zValue + "\nmagnitude: " + magnitude);
 
                         }

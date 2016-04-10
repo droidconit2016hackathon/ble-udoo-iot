@@ -12,7 +12,6 @@ import android.os.Handler;
 import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.TextView;
 
 import org.altbeacon.beacon.Beacon;
@@ -23,7 +22,6 @@ import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
@@ -42,12 +40,6 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer {
     TextView connection_info_text;
 
     @ViewById
-    Button light_on;
-
-    @ViewById
-    Button reset_button;
-
-    @ViewById
     TextView iblioservice_info;
 
     @ViewById
@@ -59,8 +51,6 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer {
     @ViewById
     TextView beacon_distance_info;
 
-    @ViewById
-    TextView fall_info;
 
     private BluetoothAdapter mBluetoothAdapter;
     private Handler mHandler;
@@ -93,14 +83,8 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer {
     }
 
 
-    @Click(R.id.light_on)
-    void turnLightOn() {
+    public void turnLightOn() {
         iblioService.lightOnLed(5);
-    }
-
-    @Click(R.id.reset_button)
-    void resetFallenInfo() {
-        setFallenInfo("Listening...");
     }
 
 
@@ -204,12 +188,6 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer {
     @UiThread
     public void setAccelerometerInfo(String text) {
           accelerometer_info.setText(text);
-    }
-
-
-    @UiThread
-    public void setFallenInfo(String text) {
-        fall_info.setText(text);
     }
 
 

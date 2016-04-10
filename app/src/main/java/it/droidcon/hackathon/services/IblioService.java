@@ -74,25 +74,10 @@ public class IblioService {
 
             }
 
-//            @Override
-//            public void onCharacteristicChanged(BluetoothGatt gatt,
-//                                                BluetoothGattCharacteristic characteristic) {
-//
-////                byte[] measureValue = characteristic.getValue();
-////
-////                int intValue = getValue(measureValue);
-////                Log.i("VAL", String.valueOf(intValue));
-////
-////                //TODO do something
-//            }
-
 
         });
 
     }
 
-//    private int getValue(byte[] measureValue) {
-//        return wrap(measureValue).order(ByteOrder.BIG_ENDIAN).getInt();
-//    }
 
 }

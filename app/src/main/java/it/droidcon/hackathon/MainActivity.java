@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer {
         mUdooBluManager = new UdooBluManager(this);
         initBluetooth();
         scanLeDevice();
+        initBeacons();
     }
 
 
@@ -164,10 +165,11 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer {
             public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
                 Log.i(getClass().getSimpleName(), "scan range");
                 if (beacons.size() > 0) {
-                    setTextOnBeaconDistance(String.valueOf(beacons.iterator().next().getDistance()));
+                    Beacon beacon = beacons.iterator().next();
+                    if (beacon.getBluetoothAddress().contains("B5:86")) {
+                    setTextOnBeaconDistance(beacon.getBluetoothAddress() + " @ " + String.valueOf(beacon.getDistance()).substring(0, 5) + " meters");
+                    }
                     Log.i(getClass().getSimpleName(), "The first beacon I see is about " + beacons.iterator().next().getDistance() + " meters away.");
-                } else {
-                    //setTextOnBeaconDistance("none");
                 }
 
             }
